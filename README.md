@@ -10,4 +10,4 @@ This extension contributes the following settings:
 
 ### 1.0.0
 
-Initial release of OPEN-RPC 
+Initial release of OPEN-RPC vscode extension
