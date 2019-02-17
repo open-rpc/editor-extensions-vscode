@@ -1,5 +1,5 @@
 {
-  "name": "@open-rpc/vscode-extension",
+  "name": "OPEN-RPC",
   "displayName": "OPEN-RPC",
   "publisher": "OPEN-RPC",
   "description": "Provides completion and validation in for OPEN-RPC openrpc.json documents",
