@@ -2,8 +2,12 @@
   "name": "OPEN-RPC",
   "displayName": "OPEN-RPC",
   "publisher": "OPEN-RPC",
-  "description": "Provides completion and validation in for OPEN-RPC openrpc.json documents",
-  "version": "0.2.0",
+  "description": "Provides completion and validation for OPEN-RPC openrpc.json documents",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-rpc/editor-extensions-vscode.git"
+  },
   "engines": {
     "vscode": "^1.30.0"
   },

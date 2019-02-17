@@ -1,6 +1,6 @@
 # OPEN-RPC Visual Studio Code Extension
 
-Provides auto-completion and validation in for [OPEN-RPC](https://github.com/open-rpc/spec) `openrpc.json` documents.
+Provides auto-completion and validation for [OPEN-RPC](https://github.com/open-rpc/spec) `openrpc.json` documents.
 
 ## Extension Settings
 
