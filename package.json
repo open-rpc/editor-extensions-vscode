@@ -38,7 +38,7 @@
     "typescript": "^3.3.3333",
     "vscode": "^1.1.30",
     "tslint": "^5.13.1",
-    "@types/node": "^11.11.1",
+    "@types/node": "^11.11.2",
     "@types/mocha": "^5.2.6"
   }
 }
