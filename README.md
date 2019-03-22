@@ -15,8 +15,8 @@ You can find this extension on the vscode marketplace [here](https://marketplace
 Use `vscode` keybindings as normal to get auto completion and validation features:
 
 - `CTRL + SPACE` - auto complete OpenRPC Document - `ENTER` or `TAB` to complete
-- mouse `hover` underlined green `~` OR `CMD + SHIFT + M` to see validation errors
-  - `CMD + I` - `hover`
+- mouse `hover` underlined green `~` to see errors OR `CMD + SHIFT + M` to see errors in the `Problems Pane`
+  - `CMD + K + I` - keychord for `hover`
 
 **gif**
 
