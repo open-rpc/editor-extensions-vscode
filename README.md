@@ -12,6 +12,8 @@ You can find this extension on the vscode marketplace [here](https://marketplace
 
 ## Usage
 
+Open a file that matches the pattern: `*openrpc.json`
+
 Use `vscode` keybindings as normal to get auto completion and validation features:
 
 - `CTRL + SPACE` - auto complete OpenRPC Document - `ENTER` or `TAB` to complete
