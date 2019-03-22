@@ -18,10 +18,13 @@ Use `vscode` keybindings as normal to get auto completion and validation feature
 - mouse `hover` underlined green `~` OR `CMD + SHIFT + M` to see validation errors
   - `CMD + I` - `hover`
 
+**gif**
 
 ![openrpc-vscode](https://user-images.githubusercontent.com/364566/54830472-c5819800-4c75-11e9-8490-49656eb0dd66.gif)
 
+**screenshot**
 
+![image](https://user-images.githubusercontent.com/364566/54831313-59a02f00-4c77-11e9-84bf-eb486f5aa1db.png)
 
 ## Extension Settings
 
