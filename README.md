@@ -17,7 +17,7 @@ Open a file that matches the pattern: `*openrpc.json`
 Use `vscode` keybindings as normal to get auto completion, formatting and validation features:
 
 - `CTRL + SPACE` - auto complete OpenRPC Document - `ENTER` or `TAB` to complete
-- `CTRL + N/CTRL + P` - down/up a line (also works as up/down in autocomplete)
+  - `CTRL + N/CTRL + P` - down/up a completion menu line
 - `ALT + SHIFT + F` - Format Document
 - To **See Errors**:
   - mouse `hover` underlined green `~` 
