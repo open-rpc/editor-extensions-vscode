@@ -44,4 +44,16 @@ This extension contributes the following settings:
 
 Initial release of OPEN-RPC vscode extension
 
+### Conventions and Specifications 
 
+Using conventions, documentation and specifications make it easier to:
+- communicate the problem you are solving
+- ease onboarding
+- build and use composable tools
+- promote open source contribution and engagement
+- promote issue and feature discussion on Github itself
+
+
+### Contributing
+
+How to contribute, build and release are outlined in [CONTRIBUTING.md](CONTRIBUTING.md), [BUILDING.md](BUILDING.md) and [RELEASING.md](RELEASING.md) respectively. Commits in this repository follow the [CONVENTIONAL_COMMITS.md](CONVENTIONAL_COMMITS.md) specification.
