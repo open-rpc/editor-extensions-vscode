@@ -16,7 +16,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:json"
+    "onLanguage:json",
+    "onCommand:openrpc.previewDoc"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -24,6 +25,13 @@
       {
         "fileMatch": "*openrpc.json",
         "url": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "openrpc.previewDoc",
+        "title": "Start OpenRPC preview window",
+        "category": "Document Preview"
       }
     ]
   },
