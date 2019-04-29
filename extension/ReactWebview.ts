@@ -26,7 +26,26 @@ export class ReactWebView {
 			ReactWebView.currentPanel.webview.html = this.getWebviewContent(extensionPath);
 
 			// Clean up resource when panel disposes
-			ReactWebView.currentPanel.onDidDispose(ReactWebView.currentPanel.dispose);
+			ReactWebView.currentPanel.onDidDispose(() => {
+				if (ReactWebView.currentPanel) {
+					ReactWebView.currentPanel.dispose();
+					ReactWebView.currentPanel = undefined;
+				}
+			});
+
+			vscode.workspace.findFiles('openrpc.json')
+				.then(files => {
+					const openRpcDoc = files[0]; // using the file at root
+
+					const docData = require(openRpcDoc.path);
+					this.updateContent(docData);
+				});
+		}
+	}
+
+	updateContent(data: string) {
+		if (ReactWebView.currentPanel) {
+			ReactWebView.currentPanel.webview.postMessage(data);
 		}
 	}
 
