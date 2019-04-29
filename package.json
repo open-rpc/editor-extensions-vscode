@@ -19,7 +19,7 @@
     "onLanguage:json",
     "onCommand:openrpc.previewDoc"
   ],
-  "main": "./out/extension.js",
+  "main": "./build/extension/extension.js",
   "contributes": {
     "jsonValidation": [
       {
@@ -37,17 +37,19 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "react-scripts build && tsc -p tsconfig.extension.json",
+    "watch": "tsc -watch -p tsconfig.extension.json",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "dependencies": {
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
+    "@types/uuid": "^3.4.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.0"
+    "react-scripts": "^3.0.0",
+    "uuid": "^3.3.2"
   },
   "browserslist": {
     "production": [
