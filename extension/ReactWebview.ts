@@ -96,6 +96,11 @@ export class ReactWebView {
 				<title>React App</title>
 				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https:; script-src 'nonce-${nonce}';style-src vscode-resource: 'unsafe-inline' http: https: data:;">
 				<base href="${vscode.Uri.file(path.join(extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">
+				<style>
+					body {
+						background: white;
+					}
+				</style>
 			</head>
 
 			<body>
