@@ -23,7 +23,10 @@ export class ReactWebView {
 				}
       );
 
-      ReactWebView.currentPanel.webview.html = this.getWebviewContent(extensionPath);
+			ReactWebView.currentPanel.webview.html = this.getWebviewContent(extensionPath);
+
+			// Clean up resource when panel disposes
+			ReactWebView.currentPanel.onDidDispose(ReactWebView.currentPanel.dispose);
 		}
 	}
 
