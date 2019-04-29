@@ -40,6 +40,18 @@ export class ReactWebView {
 					const docData = require(openRpcDoc.path);
 					this.updateContent(docData);
 				});
+
+			vscode.workspace.onDidChangeTextDocument(({ contentChanges, document }) => {
+				if (document.fileName.endsWith('openrpc.json') && !document.isDirty) {
+					try {
+						const serializedText = document.getText().replace('\n', '');
+						const parsedData = JSON.parse(serializedText);
+						this.updateContent(parsedData);
+					} catch(error) {
+						vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+					}
+				}
+			});
 		}
 	}
 
