@@ -55,7 +55,7 @@ export class ReactWebView {
 		}
 	}
 
-	updateContent(data: string) {
+	updateContent(data: any) {
 		if (ReactWebView.currentPanel) {
 			ReactWebView.currentPanel.webview.postMessage(data);
 		}

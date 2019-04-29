@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Documentation from '@open-rpc/docs-react';
 
 interface Props {}
 interface State {
@@ -7,7 +8,7 @@ interface State {
 
 class App extends React.Component<Props, State> {
   state: State = {
-    schema: undefined,
+    schema: {},
   };
 
   constructor(props: Props) {
@@ -20,10 +21,7 @@ class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <>
-        <h1>Schema</h1>
-        {JSON.stringify(this.state.schema)}
-      </>
+      <Documentation schema={this.state.schema} />
     );
   }
 }
