@@ -16,7 +16,7 @@ export class ReactWebView {
 				const parsedData = JSON.parse(serializedText);
 				this.updateContent(parsedData);
 			} catch (error) {
-				vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+				//vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
 			}
 		});
 
