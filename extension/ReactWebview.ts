@@ -5,7 +5,9 @@ import { OpenRPC } from '@open-rpc/meta-schema';
 import { parseOpenRPCDocument } from '@open-rpc/schema-utils-js';
 
 const parseDocument = (doc: string): Promise<OpenRPC> => {
-  return parseOpenRPCDocument(doc.replace('\n', ''));
+  return parseOpenRPCDocument(doc.replace('\n', ''), {
+    validate: false
+  });
 };
 
 export class ReactWebView {
@@ -20,7 +22,7 @@ export class ReactWebView {
       try {
         this.updateContent(await parseDocument(editor.document.getText()));
       } catch (error) {
-        //vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+        // vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
       }
     });
 
@@ -56,7 +58,7 @@ export class ReactWebView {
             vscode.commands.executeCommand('workbench.action.navigateBack');
           }, 300);
         } catch (error) {
-          vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+          // vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
         }
       }
     };

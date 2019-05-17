@@ -20,10 +20,10 @@ Use `vscode` keybindings as normal to get auto completion, formatting and valida
   - `CTRL + N/CTRL + P` - down/up a completion menu line
 - `ALT + SHIFT + F` - Format Document
 - To **See Errors**:
-  - mouse `hover` underlined green `~` 
+  - mouse `hover` underlined green `~`
     - `CMD + K + I` - keychord for `hover`
   - `CMD + SHIFT + M` to see errors in the `Problems Pane`
-  
+
 
 
 **gif**
@@ -33,6 +33,15 @@ Use `vscode` keybindings as normal to get auto completion, formatting and valida
 **screenshot**
 
 ![image](https://user-images.githubusercontent.com/364566/54831313-59a02f00-4c77-11e9-84bf-eb486f5aa1db.png)
+
+
+## Document Preview
+
+`CMD + SHIFT + P` brings up the command palette, then search for `OpenRPC preview` and select `Document Preview: Start OpenRPC preview window`.
+
+![image](https://user-images.githubusercontent.com/364566/57946218-a75ca080-7890-11e9-8f51-e72b389b243e.png)
+
+![image](https://user-images.githubusercontent.com/364566/57946235-b17e9f00-7890-11e9-9e41-e244621e9a05.png)
 
 ## Extension Settings
 
