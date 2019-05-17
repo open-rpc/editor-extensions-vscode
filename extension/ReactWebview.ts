@@ -1,6 +1,12 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as v4 from 'uuid/v4';
+import { OpenRPC } from '@open-rpc/meta-schema';
+import { parseOpenRPCDocument } from '@open-rpc/schema-utils-js';
+
+const parseDocument = (doc: string): Promise<OpenRPC> => {
+  return parseOpenRPCDocument(doc.replace('\n', ''));
+};
 
 export class ReactWebView {
   private static currentPanel: vscode.WebviewPanel | undefined;
@@ -10,11 +16,9 @@ export class ReactWebView {
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
 
-    vscode.workspace.onDidChangeTextDocument((editor) => {
+    vscode.workspace.onDidChangeTextDocument(async (editor) => {
       try {
-        const serializedText = editor.document.getText().replace('\n', '');
-        const parsedData = JSON.parse(serializedText);
-        this.updateContent(parsedData);
+        this.updateContent(await parseDocument(editor.document.getText()));
       } catch (error) {
         //vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
       }
@@ -44,18 +48,20 @@ export class ReactWebView {
       });
     }
 
-    if (vscode.window.activeTextEditor) {
-      try {
-        const serializedText = vscode.window.activeTextEditor.document.getText().replace('\n', '');
-        const parsedData = JSON.parse(serializedText);
-        this.updateContent(parsedData);
-        setTimeout(() => {
-          vscode.commands.executeCommand('workbench.action.navigateBack');
-        }, 300);
-      } catch (error) {
-        vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+    const init = async () => {
+      if (vscode.window.activeTextEditor) {
+        try {
+          this.updateContent(await parseDocument(vscode.window.activeTextEditor.document.getText()));
+          setTimeout(() => {
+            vscode.commands.executeCommand('workbench.action.navigateBack');
+          }, 300);
+        } catch (error) {
+          vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+        }
       }
-    }
+    };
+
+    init();
   }
 
 
