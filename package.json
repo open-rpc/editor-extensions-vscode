@@ -16,23 +16,55 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:json"
+    "onLanguage:json",
+    "onCommand:openrpc.previewDoc"
   ],
-  "main": "./out/extension.js",
+  "main": "./build/extension/extension.js",
   "contributes": {
     "jsonValidation": [
       {
         "fileMatch": "*openrpc.json",
         "url": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
       }
+    ],
+    "commands": [
+      {
+        "command": "openrpc.previewDoc",
+        "title": "Start OpenRPC preview window",
+        "category": "Document Preview"
+      }
     ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "build": "npm run compile",
+    "compile": "npm run lint && react-scripts build && tsc -p tsconfig.extension.json",
+    "watch": "tsc -watch -p tsconfig.extension.json",
+    "lint": "tslint --fix -p .",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "dependencies": {
+    "@open-rpc/docs-react": "^1.0.7",
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
+    "@types/uuid": "^3.4.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.0",
+    "uuid": "^3.3.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
     "typescript": "^3.3.4000",
