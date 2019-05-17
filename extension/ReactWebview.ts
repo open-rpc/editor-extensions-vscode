@@ -3,95 +3,95 @@ import * as path from 'path';
 import * as v4 from 'uuid/v4';
 
 export class ReactWebView {
-	public static currentPanel: vscode.WebviewPanel | undefined;
+  private static currentPanel: vscode.WebviewPanel | undefined;
 
-	constructor(context: vscode.ExtensionContext) {
-		const column = vscode.window.activeTextEditor
-			? vscode.window.activeTextEditor.viewColumn
-			: undefined;
+  constructor(context: vscode.ExtensionContext) {
+    const column = vscode.window.activeTextEditor
+      ? vscode.window.activeTextEditor.viewColumn
+      : undefined;
 
-		vscode.workspace.onDidChangeTextDocument((editor) => {
-			try {
-				const serializedText = editor.document.getText().replace('\n', '');
-				const parsedData = JSON.parse(serializedText);
-				this.updateContent(parsedData);
-			} catch (error) {
-				//vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
-			}
-		});
+    vscode.workspace.onDidChangeTextDocument((editor) => {
+      try {
+        const serializedText = editor.document.getText().replace('\n', '');
+        const parsedData = JSON.parse(serializedText);
+        this.updateContent(parsedData);
+      } catch (error) {
+        //vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+      }
+    });
 
-		// Check for existing panel
-		if (ReactWebView.currentPanel) {
-			ReactWebView.currentPanel.reveal(column);
-		} else {
-			ReactWebView.currentPanel = vscode.window.createWebviewPanel(
-				'openRpc',
-				'Preview: openrpc.json',
-				vscode.ViewColumn.Two,
-				{
-					enableScripts: true
-				}
-			);
+    // Check for existing panel
+    if (ReactWebView.currentPanel) {
+      ReactWebView.currentPanel.reveal(column);
+    } else {
+      ReactWebView.currentPanel = vscode.window.createWebviewPanel(
+        'openRpc',
+        'Preview: openrpc.json',
+        vscode.ViewColumn.Two,
+        {
+          enableScripts: true
+        }
+      );
 
-			ReactWebView.currentPanel.webview.html = this.getWebviewContent(context.extensionPath);
+      ReactWebView.currentPanel.webview.html = this.getWebviewContent(context.extensionPath);
 
-			// Clean up resource when panel disposes
-			ReactWebView.currentPanel.onDidDispose(() => {
-				if (ReactWebView.currentPanel) {
-					ReactWebView.currentPanel.dispose();
-					ReactWebView.currentPanel = undefined;
-				}
-			});
-		}
+      // Clean up resource when panel disposes
+      ReactWebView.currentPanel.onDidDispose(() => {
+        if (ReactWebView.currentPanel) {
+          ReactWebView.currentPanel.dispose();
+          ReactWebView.currentPanel = undefined;
+        }
+      });
+    }
 
-		if (vscode.window.activeTextEditor) {
-			try {
-				const serializedText = vscode.window.activeTextEditor.document.getText().replace('\n', '');
-				const parsedData = JSON.parse(serializedText);
-				this.updateContent(parsedData);
-				setTimeout(() => {
-					vscode.commands.executeCommand('workbench.action.navigateBack');
-				}, 300);
-			} catch (error) {
-				vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
-			}
-		}
-	}
+    if (vscode.window.activeTextEditor) {
+      try {
+        const serializedText = vscode.window.activeTextEditor.document.getText().replace('\n', '');
+        const parsedData = JSON.parse(serializedText);
+        this.updateContent(parsedData);
+        setTimeout(() => {
+          vscode.commands.executeCommand('workbench.action.navigateBack');
+        }, 300);
+      } catch (error) {
+        vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+      }
+    }
+  }
 
 
-	updateContent(data: any) {
-		if (ReactWebView.currentPanel) {
-			ReactWebView.currentPanel.webview.postMessage(data);
-		}
-	}
+  updateContent(data: any) {
+    if (ReactWebView.currentPanel) {
+      ReactWebView.currentPanel.webview.postMessage(data);
+    }
+  }
 
-	getWebviewContent(extensionPath: string) {
-		const manifest = require(path.join(extensionPath, 'build', 'asset-manifest.json'));
+  getWebviewContent(extensionPath: string) {
+    const manifest = require(path.join(extensionPath, 'build', 'asset-manifest.json'));
 
-		// get main script file name
-		const mainScript = manifest.files['main.js'];
+    // get main script file name
+    const mainScript = manifest.files['main.js'];
 
-		// get runtime script file name
-		const runtimeMainScript = manifest.files['runtime~main.js'];
+    // get runtime script file name
+    const runtimeMainScript = manifest.files['runtime~main.js'];
 
-		// get all generated chunks names
-		const chunksRegex = /^(static)+(\/js)+(.)+(chunk\.js)$/;
-		const chunkNames = Object.keys(manifest.files).filter(key => chunksRegex.test(key));
+    // get all generated chunks names
+    const chunksRegex = /^(static)+(\/js)+(.)+(chunk\.js)$/;
+    const chunkNames = Object.keys(manifest.files).filter(key => chunksRegex.test(key));
 
-		// Use a nonce to whitelist which scripts can be run
-		const nonce = v4();
+    // Use a nonce to whitelist which scripts can be run
+    const nonce = v4();
 
-		const scripts = [mainScript, runtimeMainScript, ...chunkNames]
-			.map(scriptName => {
-				const scriptUri = vscode.Uri
-					.file(path.join(extensionPath, 'build', scriptName))
-					.with({ scheme: 'vscode-resource' });
+    const scripts = [mainScript, runtimeMainScript, ...chunkNames]
+      .map(scriptName => {
+        const scriptUri = vscode.Uri
+          .file(path.join(extensionPath, 'build', scriptName))
+          .with({ scheme: 'vscode-resource' });
 
-				return `<script nonce="${nonce}" src="${scriptUri}"></script>`;
-			})
-			.join('');
+        return `<script nonce="${nonce}" src="${scriptUri}"></script>`;
+      })
+      .join('');
 
-		return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
 			<html lang="en">
 			<head>
 				<meta charset="utf-8">
@@ -109,15 +109,15 @@ export class ReactWebView {
 
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
-				<div id="root"></div>	
+				<div id="root"></div>
 				${scripts}
 			</body>
 			</html>`;
-	}
+  }
 }
 
 const createOrRevealWebView = (context: vscode.ExtensionContext) => {
-	return new ReactWebView(context);
+  return new ReactWebView(context);
 };
 
 export default createOrRevealWebView;
