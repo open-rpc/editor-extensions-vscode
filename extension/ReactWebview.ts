@@ -5,25 +5,35 @@ import * as v4 from 'uuid/v4';
 export class ReactWebView {
 	public static currentPanel: vscode.WebviewPanel | undefined;
 
-	constructor(extensionPath: string) {
-    const column = vscode.window.activeTextEditor
-      ? vscode.window.activeTextEditor.viewColumn
-      : undefined;
+	constructor(context: vscode.ExtensionContext) {
+		const column = vscode.window.activeTextEditor
+			? vscode.window.activeTextEditor.viewColumn
+			: undefined;
+
+		vscode.workspace.onDidChangeTextDocument((editor) => {
+			try {
+				const serializedText = editor.document.getText().replace('\n', '');
+				const parsedData = JSON.parse(serializedText);
+				this.updateContent(parsedData);
+			} catch (error) {
+				vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+			}
+		});
 
 		// Check for existing panel
 		if (ReactWebView.currentPanel) {
 			ReactWebView.currentPanel.reveal(column);
 		} else {
 			ReactWebView.currentPanel = vscode.window.createWebviewPanel(
-        'openRpc',
-        'Preview: openrpc.json',
-				vscode.ViewColumn.One,
+				'openRpc',
+				'Preview: openrpc.json',
+				vscode.ViewColumn.Two,
 				{
 					enableScripts: true
 				}
-      );
+			);
 
-			ReactWebView.currentPanel.webview.html = this.getWebviewContent(extensionPath);
+			ReactWebView.currentPanel.webview.html = this.getWebviewContent(context.extensionPath);
 
 			// Clean up resource when panel disposes
 			ReactWebView.currentPanel.onDidDispose(() => {
@@ -32,28 +42,22 @@ export class ReactWebView {
 					ReactWebView.currentPanel = undefined;
 				}
 			});
+		}
 
-			vscode.workspace.findFiles('openrpc.json')
-				.then(files => {
-					const openRpcDoc = files[0]; // using the file at root
-
-					const docData = require(openRpcDoc.path);
-					this.updateContent(docData);
-				});
-
-			vscode.workspace.onDidChangeTextDocument(({ contentChanges, document }) => {
-				if (document.fileName.endsWith('openrpc.json') && !document.isDirty) {
-					try {
-						const serializedText = document.getText().replace('\n', '');
-						const parsedData = JSON.parse(serializedText);
-						this.updateContent(parsedData);
-					} catch(error) {
-						vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
-					}
-				}
-			});
+		if (vscode.window.activeTextEditor) {
+			try {
+				const serializedText = vscode.window.activeTextEditor.document.getText().replace('\n', '');
+				const parsedData = JSON.parse(serializedText);
+				this.updateContent(parsedData);
+				setTimeout(() => {
+					vscode.commands.executeCommand('workbench.action.navigateBack');
+				}, 300);
+			} catch (error) {
+				vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
+			}
 		}
 	}
+
 
 	updateContent(data: any) {
 		if (ReactWebView.currentPanel) {
@@ -69,7 +73,7 @@ export class ReactWebView {
 
 		// get runtime script file name
 		const runtimeMainScript = manifest.files['runtime~main.js'];
-	
+
 		// get all generated chunks names
 		const chunksRegex = /^(static)+(\/js)+(.)+(chunk\.js)$/;
 		const chunkNames = Object.keys(manifest.files).filter(key => chunksRegex.test(key));
@@ -113,7 +117,7 @@ export class ReactWebView {
 }
 
 const createOrRevealWebView = (context: vscode.ExtensionContext) => {
-	return new ReactWebView(context.extensionPath);
+	return new ReactWebView(context);
 };
 
 export default createOrRevealWebView;

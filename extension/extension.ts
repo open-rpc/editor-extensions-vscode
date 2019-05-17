@@ -8,11 +8,10 @@ import createOrRevealWebView from './ReactWebview';
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('openrpc.previewDoc', () => {
-			// Create and show panel
 			createOrRevealWebView(context);
 		})
 	);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
