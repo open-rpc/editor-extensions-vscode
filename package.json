@@ -50,7 +50,7 @@
     "@open-rpc/schema-utils-js": "^1.11.3",
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
-    "@types/uuid": "^3.4.4",
+    "@types/uuid": "^3.4.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^3.0.0",
