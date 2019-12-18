@@ -38,22 +38,27 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "build": "npm run compile",
-    "compile": "npm run lint && react-scripts build && tsc -p tsconfig.extension.json",
+    "compile": "npm run lint && rescripts build && tsc -p tsconfig.extension.json",
     "watch": "tsc -watch -p tsconfig.extension.json",
     "lint": "tslint --fix -p .",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "dependencies": {
-    "@open-rpc/docs-react": "^1.0.7",
-    "@open-rpc/meta-schema": "^1.5.3",
+    "@material-ui/core": "^4.7.2",
+    "@material-ui/icons": "^4.5.1",
+    "@open-rpc/docs-react": "^1.1.1",
+    "@open-rpc/inspector": "^1.2.6",
+    "@open-rpc/meta-schema": "^1.5.4",
     "@open-rpc/schema-utils-js": "^1.11.3",
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
     "@types/uuid": "^3.4.4",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.0",
+    "localstorage-memory": "^1.0.3",
+    "monaco-editor": "^0.18.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "use-dark-mode": "^2.3.1",
     "uuid": "^3.3.2"
   },
   "browserslist": {
@@ -69,10 +74,17 @@
     ]
   },
   "devDependencies": {
+    "@rescripts/cli": "0.0.13",
+    "@rescripts/utilities": "0.0.6",
     "@types/mocha": "^5.2.6",
     "@types/node": "^12.7.4",
+    "monaco-editor-webpack-plugin": "^1.7.0",
+    "react-scripts": "^3.3.0",
     "tslint": "^5.14.0",
     "typescript": "^3.3.4000",
     "vscode": "^1.1.33"
-  }
+  },
+  "rescripts": [
+    "rescript-monaco"
+  ]
 }
