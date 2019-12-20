@@ -8,7 +8,11 @@ import createOrRevealWebView from './ReactWebview';
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('openrpc.previewDoc', () => {
-			createOrRevealWebView(context);
+      try {
+        createOrRevealWebView(context);
+      } catch (e) {
+        console.log("error", e);
+      }
 		})
 	);
 }

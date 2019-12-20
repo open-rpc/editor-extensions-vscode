@@ -35,7 +35,7 @@ export class ReactWebView {
         'Preview: openrpc.json',
         vscode.ViewColumn.Two,
         {
-          enableScripts: true
+          enableScripts: true,
         }
       );
 
@@ -53,10 +53,11 @@ export class ReactWebView {
     const init = async () => {
       if (vscode.window.activeTextEditor) {
         try {
-          this.updateContent(await parseDocument(vscode.window.activeTextEditor.document.getText()));
-          setTimeout(() => {
+          const text = await parseDocument(vscode.window.activeTextEditor.document.getText());
+          setTimeout(async () => {
+            this.updateContent(text);
             vscode.commands.executeCommand('workbench.action.navigateBack');
-          }, 300);
+          }, 1000);
         } catch (error) {
           // vscode.window.showErrorMessage(`Error parsing openrpc.json: ${error.message}`);
         }
@@ -69,35 +70,47 @@ export class ReactWebView {
 
   updateContent(data: any) {
     if (ReactWebView.currentPanel) {
-      ReactWebView.currentPanel.webview.postMessage(data);
+      ReactWebView.currentPanel.webview.postMessage({
+        method: "updateSchema",
+        params: {
+          schema: data
+        }
+      });
     }
   }
 
   getWebviewContent(extensionPath: string) {
     const manifest = require(path.join(extensionPath, 'build', 'asset-manifest.json'));
 
-    // get main script file name
-    const mainScript = manifest.files['main.js'];
-
-    // get runtime script file name
-    const runtimeMainScript = manifest.files['runtime~main.js'];
-
     // get all generated chunks names
-    const chunksRegex = /^(static)+(\/js)+(.)+(chunk\.js)$/;
+    const chunksRegex = /^((?!\.map|\.css|\.html).)*$/;
     const chunkNames = Object.keys(manifest.files).filter(key => chunksRegex.test(key));
 
     // Use a nonce to whitelist which scripts can be run
     const nonce = v4();
 
-    const scripts = [mainScript, runtimeMainScript, ...chunkNames]
-      .map(scriptName => {
+    const scripts = [...chunkNames]
+      .map((scriptName) => {
         const scriptUri = vscode.Uri
-          .file(path.join(extensionPath, 'build', scriptName))
+          .file(path.join(extensionPath, 'build', manifest.files[scriptName]))
           .with({ scheme: 'vscode-resource' });
 
         return `<script nonce="${nonce}" src="${scriptUri}"></script>`;
       })
-      .join('');
+      .join("");
+
+    // get all generated chunks names
+    const cssChunksRegex = /\.css$/;
+    const cssChunkNames = Object.keys(manifest.files).filter(key => cssChunksRegex.test(key));
+    const cssIncludes = [...cssChunkNames]
+      .map((scriptName) => {
+        const cssUri = vscode.Uri
+          .file(path.join(extensionPath, 'build', manifest.files[scriptName]))
+          .with({ scheme: 'vscode-resource' });
+
+        return `<link nonce="${nonce}" href="${cssUri}" rel="stylesheet" type="text/css"/>`;
+      })
+      .join("");
 
     return `<!DOCTYPE html>
 			<html lang="en">
@@ -106,15 +119,10 @@ export class ReactWebView {
 				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 				<meta name="theme-color" content="#000000">
 				<title>React App</title>
-				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https:; script-src 'nonce-${nonce}';style-src vscode-resource: 'unsafe-inline' http: https: data:;">
-				<base href="${vscode.Uri.file(path.join(extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">
-				<style>
-					body {
-						background: white;
-					}
-				</style>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https:; script-src 'nonce-${nonce}';style-src vscode-resource: 'unsafe-inline' http: https: data:;">
+        <base href="${vscode.Uri.file(path.join(extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">
+        ${cssIncludes}
 			</head>
-
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
