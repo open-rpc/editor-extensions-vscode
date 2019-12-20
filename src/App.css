@@ -1,7 +1,5 @@
 body {
   margin: 0;
-  height: 100%;
-  overflow: hidden;
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -23,4 +21,5 @@ body {
 
 .react-json-view, .object-key-val, .object-container, .object-content {
   background: transparent !important;
+  z-index: 0;
 }

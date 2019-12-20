@@ -48,7 +48,7 @@ export const darkTheme = createMuiTheme({
     type: "dark",
     background: {
       default: grey[900],
-      paper: "transparent",
+      paper: "transparent !important",
     },
   },
   overrides: {

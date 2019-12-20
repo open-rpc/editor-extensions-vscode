@@ -15,7 +15,20 @@ const App: React.FC = () => {
   useEffect(() => {
     const t = darkMode ? "vs-dark" : "vs";
     monaco.editor.setTheme(t);
+    setReactJsonOptions({
+      ...reactJsonOptions,
+      theme: darkMode ? "summerfruit" : "summerfruit:inverted",
+    });
   }, [darkMode]);
+
+  const [reactJsonOptions, setReactJsonOptions] = useState({
+    theme: "summerfruit:inverted",
+    collapseStringsAfterLength: 25,
+    displayDataTypes: false,
+    displayObjectSize: false,
+    indentWidth: 2,
+    name: false,
+  });
 
   useEffect(() => {
     window.addEventListener("message", (event) => {
@@ -42,7 +55,7 @@ const App: React.FC = () => {
             height="30"
             src={"https://github.com/open-rpc/design/raw/master/icons/open-rpc-logo-noText/open-rpc-logo-noText%20(PNG)/128x128.png"} />
           <Typography variant="h6">
-            OpenRPC
+            OpenRPC Preview
           </Typography>
         </Grid>
         <Grid container justify="flex-end">
@@ -55,7 +68,7 @@ const App: React.FC = () => {
       </Toolbar>
       <div style={{padding: "20px"}}>
         <CssBaseline />
-        <Documentation schema={schema as any} />
+        <Documentation schema={schema as any} reactJsonOptions={reactJsonOptions}/>
       </div>
     </MuiThemeProvider>
   );

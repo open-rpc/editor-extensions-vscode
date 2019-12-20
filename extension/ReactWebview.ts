@@ -97,7 +97,20 @@ export class ReactWebView {
 
         return `<script nonce="${nonce}" src="${scriptUri}"></script>`;
       })
-      .join('');
+      .join("");
+
+    // get all generated chunks names
+    const cssChunksRegex = /\.css$/;
+    const cssChunkNames = Object.keys(manifest.files).filter(key => cssChunksRegex.test(key));
+    const cssIncludes = [...cssChunkNames]
+      .map((scriptName) => {
+        const cssUri = vscode.Uri
+          .file(path.join(extensionPath, 'build', manifest.files[scriptName]))
+          .with({ scheme: 'vscode-resource' });
+
+        return `<link nonce="${nonce}" href="${cssUri}" rel="stylesheet" type="text/css"/>`;
+      })
+      .join("");
 
     return `<!DOCTYPE html>
 			<html lang="en">
@@ -107,14 +120,9 @@ export class ReactWebView {
 				<meta name="theme-color" content="#000000">
 				<title>React App</title>
         <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https:; script-src 'nonce-${nonce}';style-src vscode-resource: 'unsafe-inline' http: https: data:;">
-				<base href="${vscode.Uri.file(path.join(extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">
-				<style>
-					body {
-						background: white;
-					}
-				</style>
+        <base href="${vscode.Uri.file(path.join(extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">
+        ${cssIncludes}
 			</head>
-
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
