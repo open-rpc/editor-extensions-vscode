@@ -41,7 +41,7 @@ Use `vscode` keybindings as normal to get auto completion, formatting and valida
 
 ![image](https://user-images.githubusercontent.com/364566/57946218-a75ca080-7890-11e9-8f51-e72b389b243e.png)
 
-![image](https://user-images.githubusercontent.com/364566/57946235-b17e9f00-7890-11e9-9e41-e244621e9a05.png)
+![image](https://user-images.githubusercontent.com/364566/71300097-ef700400-2346-11ea-9527-31eab198f616.png)
 
 ## Extension Settings
 
