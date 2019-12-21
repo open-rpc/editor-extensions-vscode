@@ -78,7 +78,7 @@
     "@rescripts/utilities": "0.0.6",
     "@types/mocha": "^5.2.6",
     "@types/node": "^12.7.4",
-    "monaco-editor-webpack-plugin": "^1.7.0",
+    "monaco-editor-webpack-plugin": "^1.8.1",
     "react-scripts": "^3.3.0",
     "tslint": "^5.14.0",
     "typescript": "^3.3.4000",
