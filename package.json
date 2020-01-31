@@ -24,7 +24,7 @@
     "jsonValidation": [
       {
         "fileMatch": "*openrpc.json",
-        "url": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
+        "url": "https://github.com/open-rpc/meta-schema/releases/download/1.7.0/open-rpc-meta-schema.json"
       }
     ],
     "commands": [
