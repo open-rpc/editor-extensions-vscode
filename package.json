@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.7.2",
-    "@material-ui/icons": "^4.5.1",
+    "@material-ui/icons": "^4.9.1",
     "@open-rpc/docs-react": "^1.1.5",
     "@open-rpc/meta-schema": "^1.5.4",
     "@open-rpc/schema-utils-js": "^1.11.3",
