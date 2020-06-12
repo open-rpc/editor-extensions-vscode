@@ -45,7 +45,7 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "dependencies": {
-    "@material-ui/core": "^4.7.2",
+    "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.5.1",
     "@open-rpc/docs-react": "^1.1.5",
     "@open-rpc/meta-schema": "^1.5.4",
