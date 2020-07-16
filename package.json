@@ -75,7 +75,7 @@
     "@types/uuid": "^3.4.4",
     "react-scripts": "^3.3.0",
     "tslint": "^5.14.0",
-    "typescript": "^3.3.4000",
+    "typescript": "^3.9.7",
     "vscode": "^1.1.33"
   }
 }
