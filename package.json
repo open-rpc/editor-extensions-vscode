@@ -49,7 +49,7 @@
     "@material-ui/icons": "^4.5.1",
     "@open-rpc/docs-react": "^1.1.5",
     "@open-rpc/meta-schema": "^1.13.20",
-    "@open-rpc/schema-utils-js": "^1.11.3",
+    "@open-rpc/schema-utils-js": "^1.14.3",
     "monaco-editor": "^0.18.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
