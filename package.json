@@ -47,7 +47,7 @@
   "dependencies": {
     "@material-ui/core": "^4.7.2",
     "@material-ui/icons": "^4.5.1",
-    "@open-rpc/docs-react": "^1.1.5",
+    "@open-rpc/docs-react": "^1.4.0",
     "@open-rpc/meta-schema": "^1.13.20",
     "@open-rpc/schema-utils-js": "^1.11.3",
     "monaco-editor": "^0.18.1",
