@@ -1,0 +1,13 @@
+{
+  "oneOf": [
+    {
+      "$ref": "https://github.com/open-rpc/meta-schema/releases/download/1.14.1/open-rpc-meta-schema.json"
+    },
+    {
+      "$ref": "https://github.com/open-rpc/meta-schema/releases/download/1.14.1/open-rpc-meta-schema.json#definitions/methodObject"
+    },
+    {
+      "$ref": "https://github.com/open-rpc/meta-schema/releases/download/1.14.1/open-rpc-meta-schema.json#definitions/contentDescriptorObject"
+    }
+  ]
+}
